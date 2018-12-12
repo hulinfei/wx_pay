@@ -451,6 +451,30 @@ module WxPay
       r
     end
 
+    GETHBINFO_FIELDS = [:mch_billno, :bill_type]
+    def self.gethbinfo(params, options = {})
+      params = {
+        appid: options.delete(:appid) || WxPay.appid,
+        mch_id: options.delete(:mch_id) || WxPay.mch_id,
+        nonce_str: SecureRandom.uuid.tr('-', ''),
+        key: options.delete(:key) || WxPay.key
+      }.merge(params)
+
+      check_required_options(params, GETHBINFO_FIELDS)
+
+      options = {
+        ssl_client_cert: options.delete(:apiclient_cert) || WxPay.apiclient_cert,
+        ssl_client_key: options.delete(:apiclient_key) || WxPay.apiclient_key,
+        verify_ssl: OpenSSL::SSL::VERIFY_NONE
+      }.merge(options)
+
+      r = WxPay::Result.new(Hash.from_xml(invoke_remote("/mmpaymkttransfers/gethbinfo", make_payload(params), options)))
+
+      yield r if block_given?
+
+      r
+    end
+
     class << self
       private
 
