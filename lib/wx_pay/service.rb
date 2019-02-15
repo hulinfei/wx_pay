@@ -485,7 +485,7 @@ module WxPay
         key: options.delete(:key) || WxPay.key
       }.merge(params)
 
-      check_required_options(params, INVOKE_TRANSFER_REQUIRED_FIELDS)
+      check_required_options(params, QY_INVOKE_TRANSFER_REQUIRED_FIELDS)
 
       options = {
         ssl_client_cert: options.delete(:apiclient_cert) || WxPay.apiclient_cert,
