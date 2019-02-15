@@ -474,6 +474,32 @@ module WxPay
 
       r
     end
+    
+    # 企业微信付款给员工
+    QY_INVOKE_TRANSFER_REQUIRED_FIELDS = [:partner_trade_no, :openid, :check_name, :amount, :desc, :spbill_create_ip, :act_name]
+    def self.qy_invoke_transfer(params, options = {})
+      params = {
+        mch_appid: options.delete(:appid) || WxPay.appid,
+        mchid: options.delete(:mch_id) || WxPay.mch_id,
+        nonce_str: SecureRandom.uuid.tr('-', ''),
+        key: options.delete(:key) || WxPay.key
+      }.merge(params)
+
+      check_required_options(params, INVOKE_TRANSFER_REQUIRED_FIELDS)
+
+      options = {
+        ssl_client_cert: options.delete(:apiclient_cert) || WxPay.apiclient_cert,
+        ssl_client_key: options.delete(:apiclient_key) || WxPay.apiclient_key,
+        verify_ssl: OpenSSL::SSL::VERIFY_NONE
+      }.merge(options)
+
+      r = WxPay::Result.new(Hash.from_xml(invoke_remote("/mmpaymkttransfers/promotion/paywwsptrans2pocket", make_payload(params), options)))
+
+      yield r if block_given?
+
+      r
+    end
+
 
     class << self
       private
