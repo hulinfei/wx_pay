@@ -479,7 +479,7 @@ module WxPay
     QY_INVOKE_TRANSFER_REQUIRED_FIELDS = [:partner_trade_no, :openid, :check_name, :amount, :desc, :spbill_create_ip, :act_name]
     def self.qy_invoke_transfer(params, options = {})
       params = {
-        mch_appid: options.delete(:appid) || WxPay.appid,
+        appid: options.delete(:appid) || WxPay.appid,
         mchid: options.delete(:mch_id) || WxPay.mch_id,
         nonce_str: SecureRandom.uuid.tr('-', ''),
         key: options.delete(:key) || WxPay.key
