@@ -476,7 +476,7 @@ module WxPay
     end
     
     # 企业微信付款给员工
-    QY_INVOKE_TRANSFER_REQUIRED_FIELDS = [:partner_trade_no, :openid, :check_name, :amount, :desc, :spbill_create_ip, :act_name]
+    QY_INVOKE_TRANSFER_REQUIRED_FIELDS = [:partner_trade_no, :openid, :check_name, :re_user_name, :amount, :desc, :spbill_create_ip, :act_name, :ww_msg_type, :workwx_sign, :sign]
     def self.qy_invoke_transfer(params, options = {})
       params = {
         appid: options.delete(:appid) || WxPay.appid,
