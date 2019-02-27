@@ -480,12 +480,11 @@ module WxPay
     def self.qy_invoke_transfer(params, options = {})
       params = {
         appid: options.delete(:appid) || WxPay.appid,
-        mchid: options.delete(:mch_id) || WxPay.mch_id,
-        nonce_str: params[11],
+        mch_id: options.delete(:mch_id) || WxPay.mch_id,
         key: options.delete(:key) || WxPay.key
       }.merge(params)
 
-      check_required_options(params, QY_INVOKE_TRANSFER_REQUIRED_FIELDS)
+      #check_required_options(params, QY_INVOKE_TRANSFER_REQUIRED_FIELDS)
 
       options = {
         ssl_client_cert: options.delete(:apiclient_cert) || WxPay.apiclient_cert,
