@@ -476,12 +476,12 @@ module WxPay
     end
     
     # 企业微信付款给员工
-    QY_INVOKE_TRANSFER_REQUIRED_FIELDS = [:partner_trade_no, :openid, :check_name, :re_user_name, :amount, :desc, :spbill_create_ip, :act_name, :ww_msg_type, :workwx_sign, :sign]
+    QY_INVOKE_TRANSFER_REQUIRED_FIELDS = [:partner_trade_no, :openid, :check_name, :re_user_name, :amount, :desc, :spbill_create_ip, :act_name, :ww_msg_type, :workwx_sign, :sign, :nonce_str]
     def self.qy_invoke_transfer(params, options = {})
       params = {
         appid: options.delete(:appid) || WxPay.appid,
         mchid: options.delete(:mch_id) || WxPay.mch_id,
-        nonce_str: SecureRandom.uuid.tr('-', ''),
+        nonce_str: params[11],
         key: options.delete(:key) || WxPay.key
       }.merge(params)
 
